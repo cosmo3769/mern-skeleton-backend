@@ -159,3 +159,15 @@ The config variables that are defined are :
 **mongoUri** - The location of the MongoDB database instance for the project.
 
 These variables will give us the flexibility to change values from a single file and use it across the backend code.
+
+## Running Scripts
+
+**package.json** - Adding running script for development.
+
+```
+"scripts": {
+    "development": "nodemon"
+}
+```
+
+With this script added, running **npm run development** in the command line from your project folder will basically start Nodemon according to the configuration in nodemon.json. The configuration instructs Nodemon to monitor server files for updates and, on update, to build the files again, then restart the server so that the changes are immediately available.
