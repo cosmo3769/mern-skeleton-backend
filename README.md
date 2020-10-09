@@ -54,25 +54,45 @@ Some api endpoints will use authentication so we will be using here is a jwt web
 ## Folder and File Structure
 
 | mern_skeleton/
+
 | -- config/
+
 | --- config.js
+
 | -- server/
+
 | --- controllers/
+
 | ---- auth.controller.js
+
 | ---- user.controller.js
+
 | --- helpers/
+
 | ---- dbErrorHandler.js
+
 | --- models/
+
 | ---- user.model.js
+
 | --- routes/
+
 | ---- auth.routes.js
+
 | ---- user.routes.js
+
 | --- express.js
+
 | --- server.js
+
 | -- .babelrc
+
 | -- nodemon.json
+
 | -- package.json
+
 | -- template.js
+
 | -- webpack.config.server.js
 
 ## Initializing 
