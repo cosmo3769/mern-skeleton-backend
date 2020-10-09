@@ -143,3 +143,19 @@ To automatically restart the Node server as we update our code during developmen
 **npm install nodemon --save-dev**
 
 **nodemon.json**
+
+## Config Variables
+
+**config/config.js** - we will define some server-side configuration-related variables that will be used in the code but should not be hardcoded as a best practice, as well as for security purposes.
+
+The config variables that are defined are :
+
+**env** - To differentiate between development and production modes.
+
+**port** - To define the listening port for the server.
+
+**jwtSecret** - The secret key to be used to sign JWT.
+
+**mongoUri** - The location of the MongoDB database instance for the project.
+
+These variables will give us the flexibility to change values from a single file and use it across the backend code.
