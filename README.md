@@ -125,3 +125,21 @@ Since we will be using ES6+ and the latest JS features in the backend code, we w
     ]
 }
 ```
+
+Setting targets.node to current instructs Babel to compile against the current version of Node and allows us to use expressions such as async/await in our backend code.
+
+###### Webpack
+
+We will need Webpack to compile and bundle the server-side code using Babel.
+
+**npm install webpack webpack-cli webpack-node-externals --save-dev**
+
+**webpack.config.server.js**
+
+###### Nodemon
+
+To automatically restart the Node server as we update our code during development, we will use Nodemon to monitor the server code for changes.
+
+**npm install nodemon --save-dev**
+
+**nodemon.json**
