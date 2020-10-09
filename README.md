@@ -171,3 +171,9 @@ These variables will give us the flexibility to change values from a single file
 ```
 
 With this script added, running **npm run development** in the command line from your project folder will basically start Nodemon according to the configuration in nodemon.json. The configuration instructs Nodemon to monitor server files for updates and, on update, to build the files again, then restart the server so that the changes are immediately available.
+
+## Preparing the server
+
+In this, we will intefrate Express, Node and MongoDB in order to ru a completely configured server before we start implementing user-specific features.
+
+###### Configuring Express
