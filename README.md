@@ -223,7 +223,7 @@ export default app
 
 The Express app can now accept and process information from incoming HTTP requests, for which we first need to start a server using this app.
 
-## Starting the server 
+###### Starting the server 
 
 **server/server.js** - With the Express app configured to accept HTTP requests, we can go ahead and use it to implement a server that can listen for incoming requests.
 
@@ -243,7 +243,7 @@ First, we import the config variables to set the port number that the server wil
 
 To get this code running and continue development, we can run npm run development from the command line. If the code has no errors, the server should start running with Nodemon monitoring for code changes. Next, we will update this server code to integrate the database connection.
 
-## Setting up Mongoose and connecting to MongoDB
+###### Setting up Mongoose and connecting to MongoDB
 
 We will be using the mongoose module to implement the user model in this skeleton, as well as all future data models for our MERN applications.
 
@@ -272,7 +272,7 @@ When I run npm run development, it goes to :
 
 **nodemon -> webpack.config.server.js -> server.js(config.js && express.js) -> dist/server.generated.js(output after compilation and bundling)**
 
-## Serving an HTML template at a root URL
+###### Serving an HTML template at a root URL
 
 Incoming **request** at the root URL **/**
 
@@ -313,3 +313,10 @@ app.get('/', (req, res) => {
 ```
 
 Now, opening the root URL in a browser should show Hello World rendered on the page. The root URL for local machine is **http://localhost:3000/**
+
+***Now, we have our minimal backend and frontend configured, getting known of the basic concepts of building a backend from scratch and the request-response method to render a simplistic HTML page on browser screen**
+
+***Moving on, we can build on to add user-specific features.***
+
+## Implementing the user model
+
