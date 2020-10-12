@@ -224,3 +224,24 @@ export default app
 The Express app can now accept and process information from incoming HTTP requests, for which we first need to start a server using this app.
 
 ## Starting the server 
+
+**server/server.js** - With the Express app configured to accept HTTP requests, we can go ahead and use it to implement a server that can listen for incoming requests.
+
+```
+import config from './../config/config'
+import app from './express'
+
+app.listen(config.port, (err) => {
+    if (err) {
+      console.log(err)
+    }
+    console.info('Server started on port %s.', config.port)
+})
+```
+
+First, we import the config variables to set the port number that the server will listen on and then import the configured Express app to start the server. 
+
+To get this code running and continue development, we can run npm run development from the command line. If the code has no errors, the server should start running with Nodemon monitoring for code changes. Next, we will update this server code to integrate the database connection.
+
+## Setting up Mongoose and connecting to MongoDB
+
