@@ -320,3 +320,4 @@ Now, opening the root URL in a browser should show Hello World rendered on the p
 
 ## Implementing the user model
 
+**server/models/user.model.js** - Schema Definition(user data fields) && Business Logic(password encryption, authentication, custom validation)
