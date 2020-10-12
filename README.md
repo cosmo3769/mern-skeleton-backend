@@ -245,3 +245,71 @@ To get this code running and continue development, we can run npm run developmen
 
 ## Setting up Mongoose and connecting to MongoDB
 
+We will be using the mongoose module to implement the user model in this skeleton, as well as all future data models for our MERN applications.
+
+**npm install mongoose --save** 
+
+**server/server.js** - Update the server.js file to import the mongoose module, configure it so that it uses native ES6 promises, and finally use it to handle the connection to the MongoDB database for the project.
+
+```
+import mongoose from 'mongoose'
+
+// Connection URL
+mongoose.Promise = global.Promise
+mongoose.connect(config.mongoUri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
+mongoose.connection.on('error', () => {
+  throw new Error(`unable to connect to database: ${config.mongoUri}`)
+})
+```
+
+If you have the code running in development and also have MongoDB running, saving this update should successfully restart the server, which is now integrated with Mongoose and MongoDB.
+
+***Mongoose is a MongoDB object modeling tool that provides a schema-based solution to model application data. It includes built-in type casting, validation, query building, and business logic hooks. Using Mongoose with this backend stack provides a higher layer over MongoDB with more functionality, including mapping object models to database documents. This makes it simpler and more productive to develop with a Node and MongoDB backend.***
+
+**Now, we can add code to load an HTML view from this backend after we have our Express app configured, database integrated with Mongoose and a listening server ready.**
+
+When I run npm run development, it goes to :
+
+**nodemon -> webpack.config.server.js -> server.js(config.js && express.js) -> dist/server.generated.js(output after compilation and bundling)**
+
+## Serving an HTML template at a root URL
+
+Incoming **request** at the root URL **/**
+
+Serving **response** as an HTML template
+
+**template.js** - JS function that returns a simple HTML document that will render Hello World on the browser screen.
+
+```
+export default () => {
+    return `<!doctype html>
+      <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <title>MERN Skeleton</title>
+        </head>
+        <body>
+          <div id="root">Hello World</div>
+        </body>
+      </html>`
+}
+```
+
+To serve this template at the root URL **/**, updare the **express.js** file to import this template and send it in the response to a GET request for the "/" route.
+
+Incoming request - **GET** request for root URL **/**
+
+Serving response - **template.js(Hello World file)**
+
+**express.js**
+
+```
+import Template from './../template'
+
+//request-respone fo root URL "/"
+app.get('/', (req, res) => {
+    res.status(200).send(Template())
+})
+```
+
+Now, opening the root URL in a browser should show Hello World rendered on the page. The root URL for local machine is **http://localhost:3000/**
