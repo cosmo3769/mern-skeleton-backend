@@ -5,6 +5,8 @@ import compress from 'compression'
 import cors from 'cors'
 import helmet from 'helmet'
 
+import Template from './../template'
+
 const app = express()
 
 // parse body params and attach them to req.body
@@ -16,5 +18,10 @@ app.use(compress())
 app.use(helmet())
 // enable CORS - Cross Origin Resource Sharing
 app.use(cors())
+
+//request-respone fo root URL "/"
+app.get('/', (req, res) => {
+    res.status(200).send(Template())
+})
 
 export default app
