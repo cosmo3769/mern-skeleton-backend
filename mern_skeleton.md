@@ -1,4 +1,6 @@
-# mern-social
+# mern-skeleton
+
+This is a skeleton of many applications.
 
 First, we will be building a complete backend with CRUD features, auth with JWT web token.The completed backend will be a standalone server-side application that can handle HTTP
 requests to create a user, list all users, and view, update, or delete a user in the database while taking user authentication and authorization into consideration.
@@ -339,3 +341,61 @@ We will use the **mongoose** module to generate a UserSchema, which will contain
 ###### User Schema Definition
 
 The user schema definition object that's needed to generate the new Mongoose schema will declare all user data fields and associated properties. The schema will record user-related information including name, email, created-at and last-updated-at timestamps, hashed passwords, and the associated unique password salt.
+
+* Name
+
+The **name** field is a required field of the **String** type.
+
+**server/models/user.model.js** - This field will store the user's name.
+
+```
+name: {
+    type: String,
+    trim: true,
+    required: 'Name is required'
+},
+```
+
+* Email
+
+The **email** field is a required field of the **String** type.
+
+**server/models/user.model.js** - The value to be stored in this email field must have a valid email format and must also be unique in the user collection.
+
+```
+email: {
+    type: String,
+    trim: true,
+    unique: 'Email already exists',
+    match: [/.+\@.+\..+/, 'Please fill a valid email address'],
+    required: 'Email is required'
+},
+```
+
+* Created and Updated Timestamps
+
+The **created** & **updated** fields are **Date** values.
+
+**server/models/user.model.js** - These Date values will be programmatically generated to record timestamps that indicate when a user is created and user data is updated.
+
+```
+created: {
+    type: Date,
+    default: Date.now
+},
+updated: Date,
+```
+
+* Hashed Password and Salt
+
+The **hashed_password** and **salt** fields represent the encrypted user password that we will use for authentication.
+
+**server/models/user.model.js** - The actual password string is not stored directly in the database for security purposes and is handled separately.
+
+```
+hashed_password: {
+    type: String,
+    required: "Password is required"
+},
+salt: String,
+```
