@@ -1,4 +1,4 @@
-# mern-skeleton
+# mern_skeleton_backend
 
 This is a skeleton of many applications.
 
@@ -399,3 +399,29 @@ hashed_password: {
 },
 salt: String,
 ```
+
+###### Business Logic(Password for auth)
+
+This will deal with password encryption, authentication and custom validation.
+
+* Handling the password string as a virtual field
+
+The **password** field is very crucial for providing secure user authentication in any application, and each user password needs to be **encrypted**, **validated**, and **authenticated** securely as a part of the user model. The **password string** that's provided by the user is not stored directly in the user document. Instead, it is handled as a **virtual** field.
+
+**server/models/user.model.js** - When the **password** value is received on user creation or update, it is **encrypted into a new hashed value** and **set to the hashed_password** field, along with the **unique salt value** in the **salt** field.
+
+```
+UserSchema
+  .virtual('password')
+  .set(function(password) {
+    this._password = password
+    this.salt = this.makeSalt()
+    this.hashed_password = this.encryptPassword(password)
+  })
+  .get(function() {
+      return this._password
+  })
+```
+
+* Encryption and Authentication
+
