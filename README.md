@@ -320,4 +320,22 @@ Now, opening the root URL in a browser should show Hello World rendered on the p
 
 ## Implementing the user model
 
+###### Initialization
+
 **server/models/user.model.js** - Schema Definition(user data fields) && Business Logic(password encryption, authentication, custom validation)
+
+```
+import mongoose, { mongo } from 'mongoose'
+
+const UserSchema = new mongoose.Schema({
+
+})
+
+export default mongoose.model('User', UserSchema)
+```
+
+We will use the **mongoose** module to generate a UserSchema, which will contain the schema definition and user-related business logic to make up the user model. The **mongoose.Schema** function takes a schema definition object as a parameter to generate a new Mongoose schema object that will specify the properties or structure of each document in a collection.
+
+###### User Schema Definition
+
+The user schema definition object that's needed to generate the new Mongoose schema will declare all user data fields and associated properties. The schema will record user-related information including name, email, created-at and last-updated-at timestamps, hashed passwords, and the associated unique password salt.
