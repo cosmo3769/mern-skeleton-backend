@@ -425,3 +425,52 @@ UserSchema
 
 * Encryption and Authentication
 
+The **encryption logic** and **salt generation logic**, which are used to generate the **hashed_password** and **salt** values representing the **password** value, are defined as **UserSchema** methods.
+
+**server/models/user.model.js** 
+
+```
+UserSchema.methods = {
+  authenticate: function(plainText) {
+    return this.encryptPassword(plainText) === this.hashed_password
+  },
+  encryptPassword: function(password) {
+    if (!password) return ''
+    try {
+      return crypto
+        .createHmac('sha1', this.salt)
+        .update(password)
+        .digest('hex')
+    } catch (err) {
+      return ''
+    }
+  },
+  makeSalt: function() {
+    return Math.round((new Date().valueOf() * Math.random())) + ''
+  }
+}
+```
+
+The **UserSchema** methods can be used to provide the following functionality:
+
+**authenticate :** This method is called to **verify sign-in attempts** by matching the **user-provided password text** with the **hashed_password** stored in the database for a specific user.
+
+**encryptPassword :** This method is used to generate an **encrypted hash** from the **plain-text password** and a **unique salt** value using the **crypto** module from Node.
+
+**makeSalt :** This method generates a **unique and random salt** value using the **current timestamp** at **execution** and **Math.random()**.
+
+*The* **crypto** *module provides a range of cryptographic functionality, including some standard cryptographic hashing algorithms. In our code, we use the* **SHA1 hashing algorithm** *and* **createHmac** *from* **crypto** *to generate the cryptographic* **HMAC hash** *from the* **password text** *and* **salt pair**.
+
+***Why hashing algorithm uses salt?***
+
+*Hashing algorithms generate the same hash for the same input value. But to ensure two users don't end up with the same hashed password if they happen to use the same password text, we pair each password with a unique* **salt** *value before generating the hashed password for each user. This will also make it difficult to guess the hashing algorithm being used because the same user input is seemingly generating different hashes.*
+
+**sign-up** - These UserSchema methods are used to encrypt the user-provided password string into a hashed_password with a randomly generated salt value. The hashed_password and the salt are stored in the user document when the user details are saved to the database on a create or update(sign-up or update the password when they forget it).
+
+**sign-in** - Both the hashed_password and salt values are required in order to match and authenticate
+a password string provided during user sign-in using the authenticate method.
+
+**custom validation** - We should also ensure that the users select a strong password string to begin with, which can be done by adding custom validation to the passport field.
+
+* Password Field Validation
+
