@@ -1,6 +1,6 @@
 # mern_skeleton_backend
 
-This is a skeleton of many applications.
+This is a skeleton of many applications:-
 
 First, we will be building a complete backend with CRUD features, auth with JWT web token.The completed backend will be a standalone server-side application that can handle HTTP
 requests to create a user, list all users, and view, update, or delete a user in the database while taking user authentication and authorization into consideration.
