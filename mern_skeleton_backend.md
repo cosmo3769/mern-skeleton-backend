@@ -474,3 +474,4 @@ a password string provided during user sign-in using the authenticate method.
 
 * Password Field Validation
 
+To add validation constraints to the actual password string that's selected by the end user, we need to add custom validation logic and associate it with the hashed_password field in the schema.
