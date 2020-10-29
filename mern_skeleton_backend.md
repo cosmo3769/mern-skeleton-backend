@@ -270,9 +270,9 @@ If you have the code running in development and also have MongoDB running, savin
 
 **Now, we can add code to load an HTML view from this backend after we have our Express app configured, database integrated with Mongoose and a listening server ready.**
 
-When I run npm run development, it goes to :
+When I run **npm run development**, it goes to :
 
-**nodemon -> webpack.config.server.js -> server.js(config.js && express.js) -> dist/server.generated.js(output after compilation and bundling)**
+**nodemon -> webpack.config.server.js(babel.js) -> server.js(config.js && express.js) -> dist/server.generated.js(output after compilation and bundling)**
 
 ###### Serving an HTML template at a root URL
 
@@ -297,7 +297,7 @@ export default () => {
 }
 ```
 
-To serve this template at the root URL **/**, updare the **express.js** file to import this template and send it in the response to a GET request for the "/" route.
+To serve this template at the root URL **/**, update the **express.js** file to import this template and send it in the response to a GET request for the "/" route.
 
 Incoming request - **GET** request for root URL **/**
 
@@ -308,7 +308,7 @@ Serving response - **template.js(Hello World file)**
 ```
 import Template from './../template'
 
-//request-respone fo root URL "/"
+//request-respone for root URL "/"
 app.get('/', (req, res) => {
     res.status(200).send(Template())
 })
@@ -465,13 +465,25 @@ The **UserSchema** methods can be used to provide the following functionality:
 
 *Hashing algorithms generate the same hash for the same input value. But to ensure two users don't end up with the same hashed password if they happen to use the same password text, we pair each password with a unique* **salt** *value before generating the hashed password for each user. This will also make it difficult to guess the hashing algorithm being used because the same user input is seemingly generating different hashes.*
 
-**sign-up** - These UserSchema methods are used to encrypt the user-provided password string into a hashed_password with a randomly generated salt value. The hashed_password and the salt are stored in the user document when the user details are saved to the database on a create or update(sign-up or update the password when they forget it).
+**sign-up(encryption)** - These UserSchema methods are used to encrypt the user-provided password string into a hashed_password with a randomly generated salt value. The hashed_password and the salt are stored in the user document when the user details are saved to the database on a create or update(sign-up or update the password when they forget it).
 
-**sign-in** - Both the hashed_password and salt values are required in order to match and authenticate
-a password string provided during user sign-in using the authenticate method.
+**sign-in(authentication)** - Both the hashed_password and salt values are required in order to match and authenticate a password string provided during user sign-in using the authenticate method.
 
 **custom validation** - We should also ensure that the users select a strong password string to begin with, which can be done by adding custom validation to the passport field.
 
 * Password Field Validation
 
-To add validation constraints to the actual password string that's selected by the end user, we need to add custom validation logic and associate it with the hashed_password field in the schema.
+To add validation constraints to the actual password string that's selected by the end user, we need to add **custom validation logic** and associate it with the **hashed_password** field in the schema.
+
+**server/models/user.model.js** - We will ensure that password value is provided & password length is of at least 6 characters during sign-up or updating an existing password. This is acheived by adding custom validation logic to check the password value before Mongoose attempts to store the **hashed_password** value. If validation fails, the logic will return the relevant error message.
+
+```
+UserSchema.path('hashed_password').validate(function(v) {
+  if (this._password && this._password.length < 6) {
+    this.invalidate('password', 'Password must be at least 6 characters.')
+  }
+  if (this.isNew && !this._password) {
+    this.invalidate('password', 'Password is required')
+  }
+}, null)
+```
