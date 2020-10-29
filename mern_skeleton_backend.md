@@ -487,3 +487,5 @@ UserSchema.path('hashed_password').validate(function(v) {
   }
 }, null)
 ```
+
+## Mongoose Error Handling
