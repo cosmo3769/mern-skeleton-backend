@@ -488,7 +488,7 @@ UserSchema.path('hashed_password').validate(function(v) {
 }, null)
 ```
 
-## Mongoose Error Handling
+###### Mongoose Error Handling
 
 The validation constraints that are added to the user schema fields will throw error messages if they're violated when user data is saved to the database. To handle these validation errors and other errors that the database may throw when we make queries to it, we will define a **helper method** that will return a relevant error message that can be propagated in the request-response cycle as appropriate.
 
