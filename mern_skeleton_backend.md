@@ -534,3 +534,25 @@ const getUniqueErrorMessage = (err) => {
 ```
 
 With the user model completed, we can perform Mongoose operations that are relevant to acheiving user CRUD functionality with the User APIs.
+
+## Adding user CRUD APIs(without any auth restrictions)
+
+The **user API endpoints** exposed by the **Express app** will allow the **frontend** to perform **CRUD** operations on **documents(mongoose schema)** that are generated according to the **user model**. Our **user API routes** will be declared using the **Express Router** in **user.routes.js file** and then **mounted** on the **Express app** we configured in **express.js file**.
+
+***All routes and API endpoints, such as the user-specific routes we'll declare next, need to be mounted on the Express app so that they can be accessed from the client-side.***
+
+###### User Routes
+
+* /api/users 
+
+Listing Users with **GET**
+
+Creating a new user with **POST**
+
+* /api/users/:userId
+
+Fetching a user with **GET**
+
+Updating a user with **PUT**
+
+Deleting a user with **DELETE**
