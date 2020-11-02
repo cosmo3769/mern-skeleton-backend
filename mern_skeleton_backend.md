@@ -556,3 +556,5 @@ Fetching a user with **GET**
 Updating a user with **PUT**
 
 Deleting a user with **DELETE**
+
+**server/routes/user.routes.js**
