@@ -557,4 +557,27 @@ Updating a user with **PUT**
 
 Deleting a user with **DELETE**
 
-**server/routes/user.routes.js**
+**server/routes/user.routes.js** - The user routes that are defined in the **user.routes.js file** will use **express.Router()** to define route paths with the relevant **HTTP methods** and assign the corresponding **controller function** that should be called when these requests are received by the **server**. Besides declaring API endpoints that correspond to user **CRUD operations**, we'll also configure the Express router so that it handles the **userId** parameter in a requested route by executing the **userByID controller function**. When the server receives requests at each of these defined routes, the corresponding controller functions are invoked.
+
+```
+import express from 'express'
+import userCtrl from '../controllers/user.controller'
+
+const router = express.Router()
+
+router.route('/api/users')
+  .get(userCtrl.list)
+  .post(userCtrl.create)
+
+router.route('/api/users/:userId')
+  .get(userCtrl.read)
+  .put(userCtrl.update)
+  .delete(userCtrl.remove)
+
+router.param('userId', userCtrl.userByID)
+
+export default router  
+```
+
+###### User Controller
+
