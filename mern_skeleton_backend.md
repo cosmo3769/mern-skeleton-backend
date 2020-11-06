@@ -581,3 +581,14 @@ export default router
 
 ###### User Controller
 
+**npm install lodash --save** - lodash is a JavaScript library taht provides utility functions for common programming tasks, including the **manipulation of arrays and objects**. It is also used to **update an existing user with changes values**.
+
+The **user.controller.js** file will contain definitions of the controller methods that were used in the preceding user route declarations as callbacks to be executed when a route request is received by the server. This controller will make use of the **errorHandler helper** to respond to route requests with **meaningful messages when a Mongoose error occurs**.
+
+###### Creating a new user
+
+The route is defined in the **user.routes.js** file:
+
+**router.route('/api/users').post(userCtrl.create)**
+
+When the Express app gets a **POST request at '/api/users'**, it calls the **create function** we defined in the **controller**.
