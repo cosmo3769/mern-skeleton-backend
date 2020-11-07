@@ -624,3 +624,14 @@ When the Express app gets a **GET request at '/api/users'**, it executes the **l
 **server/controllers/user.controller.js**
 
 ```
+const list = async (req, res) => {
+    try {
+      let users = await User.find().select('name email updated created')
+      res.json(users)
+    } catch (err) {
+      return res.status(400).json({
+        error: errorHandler.getErrorMessage(err)
+      })
+    }
+  }
+```
