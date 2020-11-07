@@ -587,8 +587,40 @@ The **user.controller.js** file will contain definitions of the controller metho
 
 ###### Creating a new user
 
-The route is defined in the **user.routes.js** file:
-
-**router.route('/api/users').post(userCtrl.create)**
+The route(API endpoint) is defined in the **user.routes.js** file: **router.route('/api/users').post(userCtrl.create)**
 
 When the Express app gets a **POST request at '/api/users'**, it calls the **create function** we defined in the **controller**.
+
+**server/controllers/user.controller.js**
+
+```
+const create = async (req, res) => {
+    const user = new User(req.body)
+    try {
+      await user.save()
+      return res.status(200).json({
+        message: "Successfully signed up!"
+      })
+    } catch (err) {
+      return res.status(400).json({
+        error: errorHandler.getErrorMessage(err)
+      })
+    }
+  }
+```
+
+This function **create** creates a new user with the **user JSON object** that's received in the **POST request** from the frontend within **req.body**. The call to **user.save** attempts to save the new user in the database after Mongoose has performed a validation check on the data. An **error or success response** is returned to the requesting client.
+
+The **create** function is defined as an **asynchronous function with the async keyword**, allowing us to use **await** with **user.save()**, which returns a **Promise**. Using the **await** keyword inside an **async** function causes this function to wait until the returned **Promise** resolves, before the next lines of code are executed. If the **Promise** rejects, an **error** is thrown and caught in the **catch** block.
+
+**Async/await** allows us to write **asynchronous JavaScript code in a seemingly sequential or synchronous manner**. For controller functions that handle **asynchronous behavior such as accessing the database**, we will use the **async/await** syntax to implement them.
+
+###### Listing all users
+
+The route(API endpoint) to fetch all the users is defined in the **user.routes.js** file. **router.route('/api/users').get(userCtrl.list)**
+
+When the Express app gets a **GET request at '/api/users'**, it executes the **list controller function**.
+
+**server/controllers/user.controller.js**
+
+```
