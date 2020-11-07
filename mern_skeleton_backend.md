@@ -635,3 +635,5 @@ const list = async (req, res) => {
     }
   }
 ```
+
+The **list** controller function finds all the users from the database, populates only the **name, email, created, and updated** fields in the resulting user list, and then returns this list of users as JSON objects in an array to the requesting client.
