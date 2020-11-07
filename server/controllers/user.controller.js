@@ -29,4 +29,7 @@ const list = async (req, res) => {
     }
   }
   
-export default create
+export default {
+    create,
+    list
+}
