@@ -637,3 +637,9 @@ const list = async (req, res) => {
 ```
 
 The **list** controller function finds all the users from the database, populates only the **name, email, created, and updated** fields in the resulting user list, and then returns this list of users as JSON objects in an array to the requesting client.
+
+###### Loading a user by ID to read, update, or delete
+
+All three API endpoints for read, update, and delete require a user to be loaded from the database based on the **user ID(value)** of the user being accessed.
+
+* Loading
