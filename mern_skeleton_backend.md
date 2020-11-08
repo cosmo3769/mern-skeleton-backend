@@ -673,3 +673,19 @@ const userByID = async (req, res, next, id) => {
 If a matching user is found in the database, the **user object is appended to the request object** in the **profile key**. Then, the **next() middleware** is used to propagate control to the next relevant controller function. For example, if the **original request was to read a user profile**, the **next()** call in **userByID** would go to the **read controller function**.
 
 * Reading
+
+The **route(API endpoint)** to read a single user's data is declared in the **user.routes.js** file - **router.route('/api/users/:userId').get(userCtrl.read)**.
+
+When the Express app gets a **GET** request at **/api/users/:userId**, it executes the **userById** controller function to load the user by the **userId** value, followed by the **read** controller function.
+
+**server/controllers/user.controller.js** - The **read** function retrieves the user details from **req.profile** and removes sensitive information, such as the **hashed_password and salt values**, before sending the **user object in the response to the requesting client**.
+
+```
+const read = (req, res) => {
+    req.profile.hashed_password = undefined
+    req.profile.salt = undefined
+    return res.json(req.profile)
+  }
+```
+
+* Updating 
