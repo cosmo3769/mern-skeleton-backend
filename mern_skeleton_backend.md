@@ -643,3 +643,33 @@ The **list** controller function finds all the users from the database, populate
 All three API endpoints for read, update, and delete require a user to be loaded from the database based on the **user ID(value)** of the user being accessed.
 
 * Loading
+
+Whenever the Express app receives a request to a route that matches a path containing the **:userId parameter** in it, the app will execute the **userByID controller function**, which fetches and loads the user into the Express request object, before propagating it to the **next** function that's specific to the request that came in.
+
+The router definition is in **user.routes.js** - **router.param('userId', userCtrl.userByID)**
+
+The **userByID controller function** uses the value in the **:userId parameter** to query the database by **_id** and load the matching user's details.
+
+**server/controllers/user.controller.js**
+
+```
+const userByID = async (req, res, next, id) => {
+    try {
+      let user = await User.findById(id)
+      if (!user)
+        return res.status('400').json({
+          error: "User not found"
+        })
+      req.profile = user
+      next()
+    } catch (err) {
+      return res.status('400').json({
+        error: "Could not retrieve user"
+      })
+    }
+  }
+```
+
+If a matching user is found in the database, the **user object is appended to the request object** in the **profile key**. Then, the **next() middleware** is used to propagate control to the next relevant controller function. For example, if the **original request was to read a user profile**, the **next()** call in **userByID** would go to the **read controller function**.
+
+* Reading
