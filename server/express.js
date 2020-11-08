@@ -1,3 +1,4 @@
+// module needed for backend
 import express from 'express'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
@@ -5,10 +6,13 @@ import compress from 'compression'
 import cors from 'cors'
 import helmet from 'helmet'
 
+//routes imported
 import userRoutes from './routes/user.routes'
+import authRoutes from './routes/auth.routes'
 
 // import Template from './../template'
 
+//express app initialized
 const app = express()
 
 // parse body params and attach them to req.body
@@ -30,5 +34,6 @@ app.use(cors())
 
 // mount routes
 app.use('/', userRoutes)
+app.use('/', authRoutes)
 
 export default app
