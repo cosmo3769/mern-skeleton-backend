@@ -716,3 +716,25 @@ const update = async (req, res) => {
 
 * Deleting
 
+The **route(API endpoint)** to delete a user is declared in the **user.routes.js** file - **router.route('/api/users/:userId').delete(userCtrl.remove)**
+
+When the Express app gets a **DELETE** request at **'/api/users/:userId'**, similar to read and update, it loads the user by ID and then the remove controller function is executed.
+
+**server/controllers/user.controller.js** - The **remove** function retrieves the user from **req.profile** and uses the **remove()** query to delete the user from the database. On successful deletion, the **requesting client is returned the deleted user object in the response**.
+
+```
+const remove = async (req, res) => {
+    try {
+      let user = req.profile
+      let deletedUser = await user.remove()
+      deletedUser.hashed_password = undefined
+      deletedUser.salt = undefined
+      res.json(deletedUser)
+    } catch (err) {
+      return res.status(400).json({
+        error: errorHandler.getErrorMessage(err)
+      })
+    }
+  }
+```
+
