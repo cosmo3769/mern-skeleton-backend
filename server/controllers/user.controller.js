@@ -46,6 +46,13 @@ const userByID = async (req, res, next, id) => {
     }
   }
   
+//Reading the single user by userId  
+const read = (req, res) => {
+    req.profile.hashed_password = undefined
+    req.profile.salt = undefined
+    return res.json(req.profile)
+  }
+
 export default {
     create,
     list
