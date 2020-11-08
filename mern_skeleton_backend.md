@@ -541,6 +541,15 @@ The **user API endpoints** exposed by the **Express app** will allow the **front
 
 ***All routes and API endpoints, such as the user-specific routes we'll declare next, need to be mounted on the Express app so that they can be accessed from the client-side.***
 
+The **API endpoint** will be mounted on the Express app in **server/express.js** - 
+
+**server/express.js**
+
+```
+import userRoutes from './routes/user.routes'
+app.use('/', userRoutes)
+```
+
 ###### User Routes
 
 * /api/users 
@@ -740,3 +749,17 @@ const remove = async (req, res) => {
 
 So with this implementation of API endpoints, any client can perform CRUD operations on the user model. However, we want to restrict access to some of these operations with authentication and authorization.
 
+## Integrating user auth and protected routes
+
+To restrict access to user operations such as **user profile view**, **user update**, and **user delete**, we will first implement **sign-in authentication with JWT**, then use it to **protect and authorize the read, update, and delete routes**.
+
+The **auth-related API endpoints** for **sign-in and sign-out** will be declared in **server/routes/auth.routes.js** and then mounted on the Express app in **server/express.js**.
+
+**server/express.js**
+
+```
+import authRoutes from './routes/auth.routes'
+app.use('/', authRoutes)
+```
+
+###### Auth Routes
