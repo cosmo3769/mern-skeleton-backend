@@ -738,3 +738,5 @@ const remove = async (req, res) => {
   }
 ```
 
+So with this implementation of API endpoints, any client can perform CRUD operations on the user model. However, we want to restrict access to some of these operations with authentication and authorization.
+
