@@ -763,3 +763,39 @@ app.use('/', authRoutes)
 ```
 
 ###### Auth Routes
+
+The two auth APIs are defined in the **auth.routes.js** file using **express.Router()** to declare the **route paths with the relevant HTTP methods**. They're also assigned the corresponding **controller functions**, which should be called when requests are received for these routes.
+
+* /auth/signin
+
+**POST** request to authenticate the user with their email and password.
+
+* /auth/signout
+
+**GET** request to clear the cookie containing a JWT that was set on the response object after sign-in.
+
+**server/routes/auth.routes.js**
+
+```
+import express from 'express'
+import authCtrl from '../controllers/auth.controller'
+
+const router = express.Router()
+
+router.route('/auth/signin')
+  .post(authCtrl.signin)
+router.route('/auth/signout')
+  .get(authCtrl.signout)
+
+export default router
+```
+
+These routes will invoke the corresponding controller functions defined in the **auth.controller.js**.
+
+###### Auth Controller
+
+The **auth.controller.js** file will handle requests to the **signin** and **signout** routes and also provide **JWT** and **express-jwt** functionality to **enable authentication and authorization for protected user API endpoints**.
+
+###### Sign-in
+
+The **route(API endpoint)** to sign-in a user is declared 
