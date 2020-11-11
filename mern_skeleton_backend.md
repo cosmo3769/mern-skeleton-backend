@@ -881,3 +881,20 @@ To **protect access to the read, update, and delete routes**, the server will ne
 
 * Protecting User Routes
 
+There will be two **auth controller** methods called **requireSignin** and **hasAuthorization**. Both will be added to the **user route declarations** that need to be **protected with authenticationa and authorization.**
+
+The **route(API endpoints for read, update and delete)** declared in **user.routes.js** need to be updated : 
+
+**server/routes/user.routes.js**
+
+```
+import authCtrl from '../controllers/auth.controller'
+
+router.route('/api/users/:userId')
+  .get(authCtrl.requireSignin, userCtrl.read)
+  .put(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.update)
+  .delete(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.remove)
+```
+
+The route to **read** a user's information only needs **authentication** verification.
+
