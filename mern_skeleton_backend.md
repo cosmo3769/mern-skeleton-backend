@@ -802,7 +802,7 @@ The **route(API endpoint)** to sign-in a user is declared in the **auth.routes.j
 
 When the Express app gets a **POST** request at **/auth/signin**, it executes the **signin** controller function.
 
-**npm install jsonwebtoken express-jwt --save**
+**npm install jsonwebtoken --save**
 
 **server/controllers/auth.controller.js**
 
@@ -855,4 +855,29 @@ The **POST** request object receives the email and password in **req.body**. Thi
 Then, the **signed JWT(token)** is returned to the **authenticated client**, along with the user's details. Optionally, we can also set the **token** to a **cookie** in the **response object** so that it is available to the **client-side if cookies are the chosen form of JWT storage**. On the **client-side**, this token must be attached as an **Authorization header when requesting protected routes from the server**.
 
 ###### Signout
+
+The **route(API endpoint)** to sign out a user is declared in the **auth.routes.js** file - **router.route('/auth/signout').get(authCtrl.signout)**
+
+When the Express app gets a **GET** request at **'/auth/signout'**, it executes the signout controller function.
+
+**server/controllers/auth.controller.js**
+
+```
+const signout = (req, res) => {
+  res.clearCookie("t")
+  return res.status('200').json({
+    message: "signed out"
+  })
+}
+```
+
+The **signout function** clears the **response cookie containing the signed JWT**. This is an **optional endpoint** and not really necessary for auth purposes **if cookies are not used at all in the frontend**.
+
+###### Protecting routes with express-jwt
+
+To **protect access to the read, update, and delete routes**, the server will need to check that the requesting client is actually an authenticated and authorized user.
+
+**npm install express-jwt --save** - To check whether the requesting user is signed in and has a valid JWT when a protected route is accessed. It is a **middleware that validates JSON Web Tokens**.
+
+* Protecting User Routes
 
