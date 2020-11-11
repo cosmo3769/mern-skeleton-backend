@@ -896,5 +896,42 @@ router.route('/api/users/:userId')
   .delete(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.remove)
 ```
 
-The route to **read** a user's information only needs **authentication** verification.
+The route to **read** a user's information only needs **authentication** verification. The **update** and **delete** routes should check for both **authentication** and **authorization** before these **CRUD** operations are executed.
+
+The **requireSignin** method checks **authentication**. The **hasAuthorization** method checks **authorization**.
+
+* Requiring Sign-in(Authentication)
+
+The **requireSignin** method in **auth.controller.js** uses **express-jwt** to verify that the incoming request has a valid **JWT** in the **Authorization** header(The requesting client makes a request to protected routes with JWT in Authorization header appended to request body). If the **token** is valid, it appends the **verified user's ID** in an **'auth'** key to the **request object**; otherwise, it throws an authentication error.
+
+**server/controllers/auth.controller.js**
+
+```
+const requireSignin = expressJwt({
+  secret: config.jwtSecret,
+  userProperty: 'auth'
+})
+```
+
+* Authorizing signed in users
+
+For some routes like **update & delete**, we need to check **authentication** as well as **authorization**(to make sure that the requesting user is only updating or deleting their own user information).
+
+**server/controllers/auth.controller.js**
+
+```
+ const hasAuthorization = (req, res, next) => {
+  const authorized = req.profile && req.auth && req.profile._id == req.auth._id
+  if (!(authorized)) {
+    return res.status('403').json({
+      error: "User is not authorized"
+    })
+  }
+  next()
+}
+```
+
+The **req.auth** object is populated by **express-jwt** in **requireSignin** after **authentication** verification, while **req.profile** is populated by the **userByID** function in **user.controller.js**.
+
+* Auth error handling for express-jwt
 
