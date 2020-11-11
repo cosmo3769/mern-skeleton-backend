@@ -935,3 +935,19 @@ The **req.auth** object is populated by **express-jwt** in **requireSignin** aft
 
 * Auth error handling for express-jwt
 
+To handle **auth-related errors** thrown by **express-jwt** when it tries to **validate JWT tokens in incoming requests**, we need to add the following errorcatching code to the Express app configuration in **mernskeleton/server/express.js**.
+
+**server/express.js**
+
+```
+app.use((err, req, res, next) => {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401).json({"error" : err.name + ": " + err.message})
+  }else if (err) {
+    res.status(400).json({"error" : err.name + ": " + err.message})
+    console.log(err)
+  }
+})
+```
+
+**express-jwt** throws an error named **UnauthorizedError** when a token cannot be validated for some reason. We catch this error here to return a 401 status back to the requesting client. We also add a response to be sent if other server-side errors are generated and caught here.
