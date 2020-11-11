@@ -798,4 +798,61 @@ The **auth.controller.js** file will handle requests to the **signin** and **sig
 
 ###### Sign-in
 
-The **route(API endpoint)** to sign-in a user is declared 
+The **route(API endpoint)** to sign-in a user is declared in the **auth.routes.js** file. - **router.route('/auth/signin').post(authCtrl.signin)**
+
+When the Express app gets a **POST** request at **/auth/signin**, it executes the **signin** controller function.
+
+**npm install jsonwebtoken express-jwt --save**
+
+**server/controllers/auth.controller.js**
+
+```
+const signin = async (req, res) => {
+    try {
+      let user = await User.findOne({
+        "email": req.body.email
+      })
+      if (!user)
+        return res.status('401').json({
+          error: "User not found"
+        })
+  
+      if (!user.authenticate(req.body.password)) {
+        return res.status('401').send({
+          error: "Email and password don't match."
+        })
+      }
+  
+      const token = jwt.sign({
+        _id: user._id
+      }, config.jwtSecret)
+  
+      res.cookie("t", token, {
+        expire: new Date() + 9999
+      })
+  
+      return res.json({
+        token,
+        user: {
+          _id: user._id,
+          name: user.name,
+          email: user.email
+        }
+      })
+  
+    } catch (err) {
+  
+      return res.status('401').json({
+        error: "Could not sign in"
+      })
+  
+    }
+  }
+```
+
+The **POST** request object receives the email and password in **req.body**. This **email** is used to **retrieve a matching user from the database**. Then, the **password authentication** method defined in **UserSchema** is used to **verify the password that's received in req.body from the client**. If the password is successfully verified, the **JWT** module is used to generate a **signed JWT** using a **secret key** and the **user's _id value**.
+
+Then, the **signed JWT(token)** is returned to the **authenticated client**, along with the user's details. Optionally, we can also set the **token** to a **cookie** in the **response object** so that it is available to the **client-side if cookies are the chosen form of JWT storage**. On the **client-side**, this token must be attached as an **Authorization header when requesting protected routes from the server**.
+
+###### Signout
+
