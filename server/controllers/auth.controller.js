@@ -54,6 +54,12 @@ const signout = (req, res) => {
     })
   }
 
+// authentication for read route for user
+const requireSignin = expressJwt({
+  secret: config.jwtSecret,
+  userProperty: 'auth'
+})
+
 export default {
     signin,
     signout,
