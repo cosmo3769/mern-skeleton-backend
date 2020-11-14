@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import expressJwt from 'express-jwt'
 import config from './../../config/config'
 
-//signin controller function
+// signin controller function
 const signin = async (req, res) => {
     try {
       let user = await User.findOne({
@@ -60,7 +60,7 @@ const requireSignin = expressJwt({
   userProperty: 'auth'
 })
 
-//authorization for authenticated user to update or delete 
+// authorization for authenticated user to update or delete 
 function hasAuthorization(req, res, next) {
   const authorized = req.profile && req.auth && req.profile._id == req.auth._id
   if (!(authorized)) {
