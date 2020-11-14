@@ -37,3 +37,61 @@ We will add the following **user interface components** to our base aplication:
 * Menu navigation bar: A component that lists all the **available and relevant views to the user**, and also helps to indicate the **user's current location in the application**.
 
 ![React Component Tree Diagram](https://github.com/piyush-cosmo/mern-social/blob/master/images/react_component_tree_diagram.png)
+
+This is the **React component tree diagram** which shows all the React components we will develop to build out the views for this base application: **MainRouter** will be the main React component. This contains all the other custom React views in the application. **Home, Signup, Signin, Users, Profile, and EditProfile** will render at individual routes declared with React Router, whereas the **Menu** component will render across all these views. **DeleteUser** will be a part of the **Profile** view.
+
+## Folder and File structure
+
+| mern_skeleton/
+
+| -- client/
+
+| --- assets/
+
+| ---- images/
+
+| --- auth/
+
+| ---- api-auth.js
+
+| ---- auth-helper.js
+
+| ---- PrivateRoute.js
+
+| ---- Signin.js
+
+| --- core/
+
+| ---- Home.js
+
+| ---- Menu.js
+
+| --- user/
+
+| ---- api-user.js
+
+| ---- DeleteUser.js
+
+| ---- EditProfile.js
+
+| ---- Profile.js
+
+| ---- Signup.js
+
+| ---- Users.js
+
+| --- App.js
+
+| --- main.js
+
+| --- MainRouter.js
+
+| --- theme.js
+
+| -- server/
+
+| --- devBundle.js
+
+| -- webpack.config.client.js
+
+| -- webpack.config.client.production.js
