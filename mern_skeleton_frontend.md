@@ -36,3 +36,4 @@ We will add the following **user interface components** to our base aplication:
 
 * Menu navigation bar: A component that lists all the **available and relevant views to the user**, and also helps to indicate the **user's current location in the application**.
 
+![React Component Tree Diagram](https://github.com/piyush-cosmo/mern-social/blob/master/images/react_component_tree_diagram.png)
