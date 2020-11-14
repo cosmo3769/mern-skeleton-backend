@@ -95,3 +95,5 @@ This is the **React component tree diagram** which shows all the React component
 | -- webpack.config.client.js
 
 | -- webpack.config.client.production.js
+
+## Setting up for React Development
